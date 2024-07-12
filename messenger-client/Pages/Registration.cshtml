@@ -1,0 +1,31 @@
+﻿@page
+@model messenger_client.Pages.RegistrationModel
+@{
+	ViewData["Title"] = "Registration";
+}
+
+<div class="row">
+	<div class="col-4"></div>
+	<form class="col-4 g-3 needs-validation border border-dark p-5 rounded ">
+		<h1 class="text-center">Registration</h1>
+		<div class="mb-3">
+			<label for="validationLogin" class="form-label">Login</label>
+			<input type="text" class="form-control" id="validationLogin" required>
+		</div>
+		<div class="mb-3">
+			<label for="validationPassword" class="form-label">Password</label>
+			<input type="password" class="form-control" id="validationPassword" required>
+		</div>
+		<div class="mb-3">
+			<label for="validationEmail" class="form-label">Email</label>
+			<input type="email" class="form-control" id="validationEmail" aria-describedby="inputGroupPrepend" required>
+		</div>
+		<div class="form-check">
+			<input class="form-check-input" type="checkbox" id="invalidCheck" required>
+			<label class="form-check-label" for="invalidCheck">
+				Agree to terms and conditions
+			</label>
+		</div>
+		<button class="btn btn-primary col-12" type="submit">Register</button>
+	</form>
+</div>
