@@ -7,7 +7,7 @@ namespace messenger_client.Pages
 {
 	public class RegistrationModel : PageModel
 	{
-		IBlockInjections blockInjections = new BlockInjections();
+		private IBlockInjections blockInjections = new BlockInjections();
 		public string IncorrectDataMessage { get; set; }
 
 		public void OnGet(bool regRes)
