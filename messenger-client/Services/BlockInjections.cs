@@ -1,32 +1,29 @@
 ﻿using messenger_client.Services.Interfeces;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace messenger_client.Services
 {
-    public class BlockInjections : IBlockInjections
-    {
-        private char[] _ListProhibitedSymbol;
-        public BlockInjections()
-        {
-            this._ListProhibitedSymbol = new char[] { '\'', '\"', '=', '*', '#', '|', '$','\\' };
+	public class BlockInjections : IBlockInjections
+	{
+		private char[] _ListProhibitedSymbol;
+
+		public BlockInjections()
+		{
+			this._ListProhibitedSymbol = new char[] { '\'', '\"', '=', '*', '#', '|', '$', '\\' };
 		}
-        public bool CheckForProhibitedSymbol(string verifiedText)
-        {
-            bool rezult = true;
-            char[] temp = verifiedText.ToCharArray();
 
-            foreach (char symbolTemp in temp)
-            {
-                foreach (char symbol in this._ListProhibitedSymbol)
-                {
-                    if (symbol == symbolTemp)
-                    {
-                        rezult = false;
-                    }
-                }
-            }
+		public bool CheckProhibitedSymbols(string verifiedText)
+		{
+			bool rezult = true;
 
-            return rezult;
-        }
-    }
+			foreach (char symbol in this._ListProhibitedSymbol)
+			{
+				if (verifiedText.Contains(symbol))
+				{
+					rezult = false;
+				}
+			}
+
+			return rezult;
+		}
+	}
 }

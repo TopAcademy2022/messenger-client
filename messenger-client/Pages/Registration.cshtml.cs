@@ -8,14 +8,11 @@ namespace messenger_client.Pages
 	public class RegistrationModel : PageModel
 	{
 		private IBlockInjections blockInjections = new BlockInjections();
+
 		public string IncorrectDataMessage { get; set; }
 
-		public void OnGet(bool regRes)
+		public void OnGet()
 		{
-			if (regRes)
-			{
-				Response.Redirect("/Login");
-			}
 		}
 
 		public IActionResult OnPostRegistration([FromBody] RegistrationData data)
@@ -26,11 +23,11 @@ namespace messenger_client.Pages
 			string? password = data.Password;
 			string? email = data.Email;
 
-			if (login != String.Empty && password != String.Empty && email != String.Empty)
+			if (!String.IsNullOrEmpty(login) && !String.IsNullOrEmpty(password) && !String.IsNullOrEmpty(email))
 			{
-				if (blockInjections.CheckForProhibitedSymbol(login) &&
-				blockInjections.CheckForProhibitedSymbol(password) &&
-				blockInjections.CheckForProhibitedSymbol(email))
+				if (blockInjections.CheckProhibitedSymbols(login) &&
+				blockInjections.CheckProhibitedSymbols(password) &&
+				blockInjections.CheckProhibitedSymbols(email))
 				{
 					if (true)
 					{

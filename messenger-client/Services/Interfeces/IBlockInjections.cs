@@ -2,6 +2,6 @@
 {
     public interface IBlockInjections
     {
-        public bool CheckForProhibitedSymbol(string str);
+        public bool CheckProhibitedSymbols(string verifiedText);
     }
 }
