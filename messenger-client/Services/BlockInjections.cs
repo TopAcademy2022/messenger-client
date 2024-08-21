@@ -13,14 +13,12 @@ namespace messenger_client.Services
 
 		public bool CheckProhibitedSymbols(string verifiedText)
 		{
-			bool rezult = true;
-
 			if (verifiedText.Any(symbol => this._ListProhibitedSymbol.Contains(symbol)))
 			{
-				rezult = false;
+				return false;
 			}
 
-			return rezult;
+			return true;
 		}
 	}
 }
