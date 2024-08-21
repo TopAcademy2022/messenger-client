@@ -15,12 +15,9 @@ namespace messenger_client.Services
 		{
 			bool rezult = true;
 
-			foreach (char symbol in this._ListProhibitedSymbol)
+			if (verifiedText.Any(symbol => this._ListProhibitedSymbol.Contains(symbol)))
 			{
-				if (verifiedText.Contains(symbol))
-				{
-					rezult = false;
-				}
+				rezult = false;
 			}
 
 			return rezult;
