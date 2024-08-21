@@ -11,9 +11,7 @@ namespace messenger_client.Pages
 
 		public string IncorrectDataMessage { get; set; }
 
-		public void OnGet()
-		{
-		}
+		public void OnGet(){}
 
 		public IActionResult OnPostRegistration([FromBody] RegistrationData data)
 		{
@@ -47,6 +45,7 @@ namespace messenger_client.Pages
 					IncorrectDataMessage = "Invalid characters entered (\\\' , \\\" , = , * , # , | , $ , \\ )";
 				}
 			}
+      
 			return Content($"<script id=\"message\">alert(\"{IncorrectDataMessage}\")</script>");
 		}
 
