@@ -1,24 +1,28 @@
 ﻿@page
 @model messenger_client.Pages.RegistrationModel
+@using messenger_client.Services.Interfeces
+@using messenger_client.Services
 @{
 	ViewData["Title"] = "Registration";
+	IBlockInjections block = new BlockInjections();
 }
+
 
 <div class="row">
 	<div class="col-4"></div>
-	<form class="col-4 g-3 needs-validation border border-dark p-5 rounded ">
+	<form method="post" class="col-4 g-3 needs-validation border border-dark p-5 rounded ">
 		<h1 class="text-center">Registration</h1>
 		<div class="mb-3">
 			<label for="validationLogin" class="form-label">Login</label>
-			<input type="text" class="form-control" id="validationLogin" required>
+			<input type="text" class="form-control" name="login" id="validationLogin" required>
 		</div>
 		<div class="mb-3">
 			<label for="validationPassword" class="form-label">Password</label>
-			<input type="password" class="form-control" id="validationPassword" required>
+			<input type="password" class="form-control" name="password" id="validationPassword" required>
 		</div>
 		<div class="mb-3">
 			<label for="validationEmail" class="form-label">Email</label>
-			<input type="email" class="form-control" id="validationEmail" aria-describedby="inputGroupPrepend" required>
+			<input type="email" class="form-control" name="email" id="validationEmail" aria-describedby="inputGroupPrepend" required>
 		</div>
 		<div class="form-check">
 			<input class="form-check-input" type="checkbox" id="invalidCheck" required>
@@ -26,6 +30,50 @@
 				Agree to terms and conditions
 			</label>
 		</div>
-		<button class="btn btn-primary col-12" type="submit">Register</button>
+		<button id="register-button" class="btn btn-primary col-12" type="button">Register</button>
 	</form>
 </div>
+
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
+
+@functions {
+	public string GetTocen()
+	{
+		return Xsrf.GetAndStoreTokens(Model.HttpContext).RequestToken;
+	}
+}
+
+<script>
+	let registration = () => {
+		$.ajax({
+			type: "POST",
+			url: "@Url.Page("/Registration", "Registration")",
+			headers: {
+				"RequestVerificationToken": "@GetTocen()"
+			},
+			data: JSON.stringify({
+				Login: document.getElementById("validationLogin").value,
+				Password: document.getElementById("validationPassword").value,
+				Email: document.getElementById("validationEmail").value
+			}),
+			contentType: "application/json; charset=utf-8",
+			dataType: "text",
+			success: (data) => 
+			{
+				if ($("*").is("#message")) 
+				{
+					$("#message").remove();
+				}
+
+				$("main").append($(data));
+			},
+			error: (xhr, status, error) => {
+				console.log(error);
+			}
+		})
+	}
+
+	document.addEventListener("DOMContentLoaded", () => {
+		document.getElementById("register-button").addEventListener("click", registration);
+	});
+</script>
